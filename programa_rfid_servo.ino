@@ -2,10 +2,10 @@
 #include <Servo.h> 
  
 
-#define RFIDEnablePin 2 //Pin that enables reading. Set as OUTPUT and LOW to read an RFID tag
-#define RFIDSerialRate 2400 //Parallax RFID Reader Serial Port Speed
+#define RFIDEnablePin 2 // Enable Read
+#define RFIDSerialRate 2400 
 
-#define RxPin 5 //Pin to read data from Reader 
+#define RxPin 5 //SOUT
 #define TxPin 4 //Pin to write data to the Reader NOTE: The reader doesn't get written to, don't connect this line.
 SoftwareSerial RFIDReader(RxPin,TxPin);
 
@@ -29,7 +29,7 @@ void setup()
 
   Serial.begin(9600);        
 
-  Serial.println("Control de acceso");  
+  Serial.println("Control de acceso:");  
   
    myservo.attach(9); 
 
@@ -49,14 +49,14 @@ void loop()
    {
      digitalWrite(RFIDEnablePin, HIGH);
      
-     myservo.write(abierto);              // tell servo to go to position in variable 'pos' 
+     myservo.write(abierto);              
     delay(10); 
      
      delay(2000);
      digitalWrite(RFIDEnablePin, LOW);
      Serial.println("Acceso Usuario 1");
      
-     myservo.write(cerrado);              // tell servo to go to position in variable 'pos' 
+     myservo.write(cerrado);              
     delay(10); 
    }
    
@@ -65,18 +65,21 @@ void loop()
    {
      digitalWrite(RFIDEnablePin, HIGH);
      
-     myservo.write(abierto);              // tell servo to go to position in variable 'pos' 
+     myservo.write(abierto);               
     delay(10); 
      
      delay(2000);
      digitalWrite(RFIDEnablePin, LOW);
      Serial.println("Acceso Usuario 2");
      
-     myservo.write(cerrado);              // tell servo to go to position in variable 'pos' 
+     myservo.write(cerrado);            
     delay(10); 
    }
    
-   if (!RFIDTAG.equals("0F02782183")||RFIDTAG.equals("0F02781ECB"))
+   if (RFIDTAG.equals("0F02782183")||RFIDTAG.equals("0F02781ECB"))
+   {
+   }
+   else
   {
           Serial.println("Acceso Denegado");
    }
